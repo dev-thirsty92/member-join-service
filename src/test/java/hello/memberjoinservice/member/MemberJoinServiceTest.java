@@ -28,8 +28,14 @@ class MemberJoinServiceTest {
     void 회원가입_중복() {
         String username = "user00";
         String password = "passWord00";
-        MemberJoinRequest request = new MemberJoinRequest(username, password);
-        memberJoinService.signUp(request);
+        // db에 중복된 username이 없으므로 회원을 저장
+        MemberJoinRequest request1 = new MemberJoinRequest(username, password);
+        memberJoinService.signUp(request1);
+
+        // db에 중복된 username이 있으므로 저장 실패
+        MemberJoinRequest request2 = new MemberJoinRequest(username, password);
+        memberJoinService.signUp(request2);
+
     }
 
     private record MemberJoinRequest(String username, String password) {
@@ -141,6 +147,8 @@ class MemberJoinServiceTest {
         public void save(MyMember member) {
             if (!persistence.containsKey(member.getUsername())) {
                 persistence.put(member.getUsername(), member);
+            }else{
+                throw new IllegalArgumentException("already exists with username " + member.getUsername());
             }
         }
     }
