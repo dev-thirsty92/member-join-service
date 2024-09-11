@@ -18,8 +18,12 @@ class MemberJoinServiceTest {
     }
 
     private static MemberJoinRequest 회원가입요청_생성() {
-        String username = "user00";
-        String password = "passWord00";
+//        String username = "user00";
+//        String password = "passWord00";
+
+        String username = "use";
+        String password = "pas";
+
         return new MemberJoinRequest(username, password);
     }
 
