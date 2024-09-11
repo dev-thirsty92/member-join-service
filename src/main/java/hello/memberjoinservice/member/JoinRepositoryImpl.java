@@ -1,8 +1,11 @@
 package hello.memberjoinservice.member;
 
+import org.springframework.stereotype.Repository;
+
 import java.util.HashMap;
 import java.util.Map;
 
+@Repository
 class JoinRepositoryImpl implements JoinRepository {
     Map<String, MyMember> persistence = new HashMap<>();
 

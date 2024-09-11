@@ -2,17 +2,14 @@ package hello.memberjoinservice.member;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 class MemberJoinServiceTest {
 
+    @Autowired
     private MemberJoinService memberJoinService;
-    private JoinRepository joinRepository;
-
-    @BeforeEach
-    void setUp() {
-        joinRepository = new JoinRepositoryImpl();
-        memberJoinService = new MemberJoinService(joinRepository);
-    }
 
     @Test
     void 회원가입() {

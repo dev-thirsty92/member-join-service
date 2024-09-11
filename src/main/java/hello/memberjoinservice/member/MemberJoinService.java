@@ -1,5 +1,8 @@
 package hello.memberjoinservice.member;
 
+import org.springframework.stereotype.Component;
+
+@Component
 class MemberJoinService {
     private final JoinRepository joinRepository;
 
