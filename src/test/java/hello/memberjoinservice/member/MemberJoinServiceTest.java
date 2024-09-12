@@ -3,7 +3,6 @@ package hello.memberjoinservice.member;
 import hello.memberjoinservice.ApiTest;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 class MemberJoinServiceTest extends ApiTest {
@@ -16,7 +15,7 @@ class MemberJoinServiceTest extends ApiTest {
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
-                .post("/join")
+                .post("/members/join")
                 .then()
                 .log().all().extract();
     }

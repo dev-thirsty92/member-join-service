@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/join")
+@RequestMapping("/members")
 class MemberJoinService {
     private final JoinRepository joinRepository;
 
@@ -17,7 +17,7 @@ class MemberJoinService {
         this.joinRepository = joinRepository;
     }
 
-    @PostMapping
+    @PostMapping("/join")
     public ResponseEntity<String> signUp(@Valid @RequestBody MyMemberDto memberDto) {
 
 //        MyMemberDto member = new MyMemberDto(request.username(), request.password());
