@@ -1,6 +1,6 @@
-package hello.memberjoinservice.member;
+package hello.memberjoinservice.member.domain;
 
-record MemberJoinRequest(String username, String password) {
+public record MemberJoinRequest(String username, String password) {
     /**
      * SpringBoot에서 Validation check를 하므로
      * request 생성 단게에서의 검증 작업은 주석처리 하였습니다.

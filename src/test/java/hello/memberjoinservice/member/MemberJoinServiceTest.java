@@ -1,6 +1,7 @@
 package hello.memberjoinservice.member;
 
 import hello.memberjoinservice.ApiTest;
+import hello.memberjoinservice.member.domain.MemberJoinRequest;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;

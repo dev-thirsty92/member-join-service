@@ -1,12 +1,13 @@
-package hello.memberjoinservice.member;
+package hello.memberjoinservice.member.repository;
 
+import hello.memberjoinservice.member.domain.MyMemberDto;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Repository
-class JoinRepositoryImpl implements JoinRepository {
+public class JoinRepositoryImpl implements JoinRepository {
     Map<String, MyMemberDto> persistence = new HashMap<>();
 
     @Override

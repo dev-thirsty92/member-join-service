@@ -1,5 +1,7 @@
-package hello.memberjoinservice.member;
+package hello.memberjoinservice.member.service;
 
+import hello.memberjoinservice.member.domain.MyMemberDto;
+import hello.memberjoinservice.member.repository.JoinRepository;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

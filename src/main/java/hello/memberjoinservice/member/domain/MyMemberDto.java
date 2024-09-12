@@ -1,4 +1,4 @@
-package hello.memberjoinservice.member;
+package hello.memberjoinservice.member.domain;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
