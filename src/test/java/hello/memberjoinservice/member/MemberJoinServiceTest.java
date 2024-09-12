@@ -3,8 +3,13 @@ package hello.memberjoinservice.member;
 import hello.memberjoinservice.ApiTest;
 import hello.memberjoinservice.member.domain.MemberJoinRequest;
 import io.restassured.RestAssured;
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class MemberJoinServiceTest extends ApiTest {
 
@@ -12,13 +17,33 @@ class MemberJoinServiceTest extends ApiTest {
     void 회원가입() {
         final MemberJoinRequest request = 회원가입요청_생성();
 
-        RestAssured.given().log().all()
+        ExtractableResponse<Response> response = RestAssured.given().log().all()
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .body(request)
                 .when()
                 .post("/members/join")
                 .then()
                 .log().all().extract();
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
+    }
+
+    @Test
+    void 회원가입_중복() {
+        final MemberJoinRequest request = 회원가입요청_생성();
+
+        회원가입();
+
+        ExtractableResponse<Response> response = RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/members/join")
+                .then()
+                .log().all().extract();
+
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.BAD_REQUEST.value());
+
     }
 
 

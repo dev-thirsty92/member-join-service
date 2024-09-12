@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/members")
 class MemberJoinService {
@@ -22,8 +24,14 @@ class MemberJoinService {
     @PostMapping("/join")
     public ResponseEntity<String> signUp(@Valid @RequestBody MyMemberDto memberDto) {
 
-//        MyMemberDto member = new MyMemberDto(request.username(), request.password());
+
+        Optional<MyMemberDto> member = joinRepository.findById(memberDto.getUsername());
+        if(member.isPresent()){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("username already exists");
+        }
+
         joinRepository.save(memberDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body("Successfully created member");
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+
     }
 }
