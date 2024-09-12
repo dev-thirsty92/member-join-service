@@ -7,10 +7,10 @@ import java.util.Map;
 
 @Repository
 class JoinRepositoryImpl implements JoinRepository {
-    Map<String, MyMember> persistence = new HashMap<>();
+    Map<String, MyMemberDto> persistence = new HashMap<>();
 
     @Override
-    public void save(MyMember member) {
+    public void save(MyMemberDto member) {
         if (!persistence.containsKey(member.getUsername())) {
             persistence.put(member.getUsername(), member);
         } else {

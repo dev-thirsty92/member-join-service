@@ -1,5 +1,5 @@
 package hello.memberjoinservice.member;
 
 interface JoinRepository {
-    void save(MyMember member);
+    void save(MyMemberDto member);
 }

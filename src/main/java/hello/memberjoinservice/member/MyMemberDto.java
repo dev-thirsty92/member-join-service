@@ -3,7 +3,7 @@ package hello.memberjoinservice.member;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-class MyMember {
+public class MyMemberDto {
 
     @NotNull
     @Pattern(regexp = "^[a-z0-9]{4,10}$")
@@ -13,7 +13,7 @@ class MyMember {
     @Pattern(regexp = "^[a-zA-Z0-9]{8,15}$")
     private final String password;
 
-    public MyMember(String username, String password) {
+    public MyMemberDto(String username, String password) {
         this.username = username;
         this.password = password;
     }

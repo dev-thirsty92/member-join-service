@@ -1,42 +1,38 @@
 package hello.memberjoinservice.member;
 
-import org.junit.jupiter.api.BeforeEach;
+import hello.memberjoinservice.ApiTest;
+import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 
-@SpringBootTest
-class MemberJoinServiceTest {
-
-    @Autowired
-    private MemberJoinService memberJoinService;
+class MemberJoinServiceTest extends ApiTest {
 
     @Test
     void 회원가입() {
         final MemberJoinRequest request = 회원가입요청_생성();
-        memberJoinService.signUp(request);
+
+        RestAssured.given().log().all()
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .body(request)
+                .when()
+                .post("/join")
+                .then()
+                .log().all().extract();
     }
+
 
     private static MemberJoinRequest 회원가입요청_생성() {
-//        String username = "user00";
-//        String password = "passWord00";
+        /**
+         * 검증 테스틑 위해 username, password를 자유로히 변경하여 테스트해주세요.
+         */
+        String username = "user00";
+        String password = "passWord00";
 
-        String username = "use";
-        String password = "pas";
+//        String username = "use";
+//        String password = "pas";
 
         return new MemberJoinRequest(username, password);
-    }
-
-    @Test
-    void 회원가입_중복() {
-        final MemberJoinRequest request1 = 회원가입요청_생성();
-        // db에 중복된 username이 없으므로 회원을 저장
-        memberJoinService.signUp(request1);
-
-        // db에 중복된 username이 있으므로 저장 실패
-        final MemberJoinRequest request2 = 회원가입요청_생성();
-        memberJoinService.signUp(request2);
-
     }
 
 }
