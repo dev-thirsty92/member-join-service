@@ -1,5 +1,6 @@
 package hello.memberjoinservice.config;
 
+import hello.memberjoinservice.jwt.CustomLogoutFilter;
 import hello.memberjoinservice.jwt.JWTFilter;
 import hello.memberjoinservice.jwt.JWTUtil;
 import hello.memberjoinservice.jwt.LoginFilter;
@@ -15,6 +16,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 
@@ -79,6 +81,8 @@ public class SecurityConfig {
                 .addFilterBefore(new JWTFilter(jwtUtil),LoginFilter.class); //loginFilter 앞에서 발동한다.
         http
                 .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository), UsernamePasswordAuthenticationFilter.class);
+        http
+                .addFilterBefore(new CustomLogoutFilter(jwtUtil, refreshRepository), LogoutFilter.class);
 
 
 
