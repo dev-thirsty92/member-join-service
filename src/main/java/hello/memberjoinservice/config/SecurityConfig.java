@@ -26,7 +26,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth)-> auth
                         // /login, /, /members/join 요청에 대해서 모든 권한을 허용
-                        .requestMatchers("/login", "/", "/members/join").permitAll()
+                        .requestMatchers("/login", "/", "/members/join", "/join ").permitAll()
                         // /admin 요청에 대한 접근은 `admin`권한을 가진 사용자에게 허용
                         .requestMatchers("/admin").hasRole("ADMIN")
                         // 나머지 요청은 login한 사용자만 접근할 수 있습니다.
