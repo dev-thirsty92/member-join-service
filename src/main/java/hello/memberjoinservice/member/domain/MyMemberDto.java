@@ -13,7 +13,6 @@ import lombok.NoArgsConstructor;
 public class MyMemberDto {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @NotNull
     @Pattern(regexp = "^[a-z0-9]{4,10}$")
     private String username;
