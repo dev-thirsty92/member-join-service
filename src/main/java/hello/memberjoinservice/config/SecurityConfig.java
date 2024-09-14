@@ -1,5 +1,7 @@
 package hello.memberjoinservice.config;
 
+import hello.memberjoinservice.jwt.JWTFilter;
+import hello.memberjoinservice.jwt.JWTUtil;
 import hello.memberjoinservice.jwt.LoginFilter;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
+    private final JWTUtil jwtUtil;
 
 
     @Bean
@@ -44,7 +47,10 @@ public class SecurityConfig {
 
         //필터를 추가한다.
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(new JWTFilter(jwtUtil),LoginFilter.class); //loginFilter 앞에서 발동한다.
+        http
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+
 
 
         // (중요) jwt 방식에서는 session을 statless상태로 관리하게 됩니다.
