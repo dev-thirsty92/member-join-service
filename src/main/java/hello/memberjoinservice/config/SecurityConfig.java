@@ -3,6 +3,7 @@ package hello.memberjoinservice.config;
 import hello.memberjoinservice.jwt.JWTFilter;
 import hello.memberjoinservice.jwt.JWTUtil;
 import hello.memberjoinservice.jwt.LoginFilter;
+import hello.memberjoinservice.login.repository.RefreshRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,7 @@ public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JWTUtil jwtUtil;
+    private final RefreshRepository refreshRepository;
 
 
     @Bean
@@ -76,7 +78,7 @@ public class SecurityConfig {
         http
                 .addFilterBefore(new JWTFilter(jwtUtil),LoginFilter.class); //loginFilter 앞에서 발동한다.
         http
-                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil), UsernamePasswordAuthenticationFilter.class);
+                .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, refreshRepository), UsernamePasswordAuthenticationFilter.class);
 
 
 
