@@ -66,6 +66,8 @@ public class SecurityConfig {
                         .requestMatchers("/login", "/", "/members/join", "/join").permitAll()
                         // /admin 요청에 대한 접근은 `admin`권한을 가진 사용자에게 허용
                         .requestMatchers("/admin").hasRole("ADMIN")
+                        //토큰 재발행 요청에 대해 모든 권한 허용
+                        .requestMatchers("/reissue").permitAll()
                         // 나머지 요청은 login한 사용자만 접근할 수 있습니다.
                         .anyRequest().authenticated()
                 );
