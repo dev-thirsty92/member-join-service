@@ -17,9 +17,10 @@ public class JWTUtil {
         this.secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), Jwts.SIG.HS256.key().build().getAlgorithm());
     }
 
-    public String createJwt(String username, String role, Long expiredMs) {
+    public String createJwt(String category, String username, String role, Long expiredMs) {
 
         return Jwts.builder()
+                .claim("category", category)
                 .claim("username", username)
                 .claim("role", role)
                 .issuedAt(new Date(System.currentTimeMillis())) //현재 발행 시간
@@ -41,6 +42,15 @@ public class JWTUtil {
                 .parseSignedClaims(token)
                 .getPayload()
                 .get("username", String.class);
+    }
+
+    public String getCategory(String token) {
+
+        return Jwts.parser().verifyWith(secretKey)
+                .build()
+                .parseSignedClaims(token)
+                .getPayload()
+                .get("category", String.class);
     }
 
     public String getRole(String token) {

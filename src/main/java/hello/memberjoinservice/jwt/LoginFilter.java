@@ -3,6 +3,7 @@ package hello.memberjoinservice.jwt;
 import hello.memberjoinservice.login.dto.CustomUserDetails;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.AllArgsConstructor;
@@ -50,16 +51,33 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         log.info("success");
-        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-        String username = customUserDetails.getUsername();
+
+        //유저 정보
+        String username = authentication.getName();
 
         Collection<? extends GrantedAuthority> authorities = authentication.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority auth = iterator.next();
         String role = auth.getAuthority();
-        String jwt = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
-        response.addHeader("Authorization", "Bearer " + jwt);
 
+        //토큰 생성 (access/refresh)
+        String access = jwtUtil.createJwt("access", username, role, 10 * 60 * 1000L);
+        String refresh = jwtUtil.createJwt("refresh", username, role, 24 * 60 * 60 * 1000L);
+
+        //응답 관리
+        response.setHeader("access", access);
+        response.addCookie(createCookie("refresh", refresh));
+        response.setStatus(HttpStatus.OK.value());
+
+    }
+
+    private Cookie createCookie(String key, String value) {
+        Cookie cookie = new Cookie(key, value);
+        cookie.setMaxAge(24 * 60 * 60); // second
+//        cookie.setSecure(true); // https를 진행할 경우
+//        cookie.setPath("/"); //쿠키가 적용되는 범위
+        cookie.setHttpOnly(true);
+        return cookie;
     }
 
     // 로그인 실패시 실행하는 메소드
