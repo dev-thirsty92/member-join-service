@@ -1,4 +1,4 @@
-package hello.memberjoinservice.member.domain;
+package hello.memberjoinservice.login.dto;
 
 public record MemberJoinRequest(String username, String password) {
     /**

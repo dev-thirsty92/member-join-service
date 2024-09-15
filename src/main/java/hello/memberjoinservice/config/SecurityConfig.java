@@ -38,7 +38,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests((auth)-> auth
                         // /login, /, /members/join 요청에 대해서 모든 권한을 허용
-                        .requestMatchers("/login", "/", "/members/join", "/join").permitAll()
+                        .requestMatchers("/login", "/", "/join").permitAll()
                         // /admin 요청에 대한 접근은 `admin`권한을 가진 사용자에게 허용
                         .requestMatchers("/admin").hasRole("ADMIN")
                         // 나머지 요청은 login한 사용자만 접근할 수 있습니다.
@@ -53,7 +53,7 @@ public class SecurityConfig {
 
 
 
-        // (중요) jwt 방식에서는 session을 statless상태로 관리하게 됩니다.
+        // (중요) jwt 방식에서는 session을 statless 상태로 관리하게 됩니다.
         http
                 .sessionManagement((session)-> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));

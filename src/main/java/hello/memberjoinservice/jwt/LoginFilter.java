@@ -60,6 +60,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String jwt = jwtUtil.createJwt(username, role, 60 * 60 * 60L);
         response.addHeader("Authorization", "Bearer " + jwt);
 
+        String s = "{\n" +
+                "\"msg\": \"로그인 성공\",\n" +
+                "\"statusCode\": 200\n" +
+                "}\n";
+        response.getOutputStream().write(s.getBytes());
+
     }
 
     // 로그인 실패시 실행하는 메소드

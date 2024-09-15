@@ -1,6 +1,6 @@
 package hello.memberjoinservice.login.service;
 
-import hello.memberjoinservice.login.dto.JoinDTO;
+import hello.memberjoinservice.login.dto.UserDTO;
 import hello.memberjoinservice.login.entitiy.UserEntity;
 import hello.memberjoinservice.login.repository.UserRepository;
 import lombok.AllArgsConstructor;
@@ -14,15 +14,16 @@ public class JoinService {
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public void joinProcess(JoinDTO joinDto){
+    public void joinProcess(UserDTO userDto) throws Exception {
 
-        String username = joinDto.getUsername();
-        String password = joinDto.getPassword();
+        String username = userDto.getUsername();
+        String password = userDto.getPassword();
 
         boolean isExist = userRepository.existsByUsername(username);
 
         if(isExist){
-            return;
+            throw new Exception();
+//            return;
         }
 
         UserEntity data = new UserEntity();
